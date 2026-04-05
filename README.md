@@ -1,8 +1,9 @@
 # bvcpcli
 
 [![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://www.python.org/)
-[![Platform](https://img.shields.io/badge/platform-FreeBSD-red.svg)](https://www.freebsd.org/)
+[![Platform](https://img.shields.io/badge/platform-FreeBSD%2015-red.svg)](https://www.freebsd.org/)
 [![Bhyve](https://img.shields.io/badge/hypervisor-bhyve-orange.svg)](https://bhyve.npulse.net/)
+[![BVCP](https://img.shields.io/badge/BVCP-2.2.2-blue.svg)](https://bhyve.npulse.net/)
 [![Protocol](https://img.shields.io/badge/protocol-DProtocol%20v2-orange.svg)](https://bhyve.npulse.net/)
 [![Encryption](https://img.shields.io/badge/encryption-AES--128--CBC-red.svg)](../../)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -16,6 +17,8 @@ directly from the shell or via batch files.
 
 [BVCP](https://bhyve.npulse.net/) is a management panel for [bhyve](https://en.wikipedia.org/wiki/Bhyve),
 the hypervisor built into FreeBSD.
+
+Tested with BVCP 2.2.2 running on FreeBSD 15.
 
 ---
 
