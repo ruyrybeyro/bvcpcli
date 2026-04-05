@@ -2,7 +2,7 @@
 # VM name: w1
 # Lines starting with # are comments and are ignored by bvcpcli
 
-# Create the VM (name: w1, template: w1)
+# Create the VM (name: w1, comment: w1)
 vm create w1 w1
 
 # CPU and architecture
