@@ -20,7 +20,7 @@ vm set w1 vnc.wait    false
 # Use local time (recommended for Windows guests)
 vm set w1 utc_time    false
 
-# Attach Windows 11 installation ISO
+# Attach Windows 11 installation ISO (unattended install with VirtIO drivers baked in)
 vm cdrom attach w1 Win11_25H2_English_x64_virtio.iso
 
 # Create and attach a 100G NVMe disk on the zstor pool
