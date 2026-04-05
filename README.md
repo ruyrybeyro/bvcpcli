@@ -186,7 +186,7 @@ timeout = 5
 
 ### Batch file
 
-`commands.txt` is a plain text file with one command per line. Lines starting with `#` are treated as comments and ignored.
+[`commands.txt`](commands.txt) is a plain text file with one command per line. Lines starting with `#` are treated as comments and ignored.
 
 ```
 # commands.txt
