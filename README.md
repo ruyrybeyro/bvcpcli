@@ -52,7 +52,7 @@ Then restart BVCP. If running `bvcpcli` on the same host as BVCP, no change is n
 ## Quick start
 
 ```bash
-pip install pycryptodome
+pip3 install pycryptodome
 chmod +x bvcpcli.py
 ./bvcpcli.py -h 192.168.1.4 -k AABBCC... version
 ```
@@ -69,7 +69,7 @@ Or save your settings once and skip the flags forever:
 ## Requirements
 
 - Python 3.6+
-- [pycryptodome](https://pypi.org/project/pycryptodome/) — `pip install pycryptodome`
+- [pycryptodome](https://pypi.org/project/pycryptodome/) — `pip3 install pycryptodome`
 
 ### Virtual environments
 
@@ -80,21 +80,21 @@ On macOS, `venv` is the default and requires no extra installation.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install pycryptodome
+pip3 install pycryptodome
 ```
 
 **uv** (fast drop-in):
 ```bash
 uv venv
 source .venv/bin/activate
-uv pip install pycryptodome
+uv pip3 install pycryptodome
 ```
 
 **Conda**:
 ```bash
 conda create -n bvcpcli python=3.11
 conda activate bvcpcli
-pip install pycryptodome
+pip3 install pycryptodome
 ```
 
 ---
