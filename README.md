@@ -12,8 +12,14 @@
 
 Communicates with the BVCP backend over TCP using the DProtocol v2 protocol,
 encrypting traffic with **AES-128-CBC** using the provided API key.
-Supports sending commands such as `vm list`, `version`, and `vm create`
-directly from the shell or via batch files.
+
+Key features:
+
+- Run a single command directly from the shell (`vm list`, `version`, `vm create`, ...)
+- **Batch mode** — run multiple commands from a file or stdin, one per line
+- Continue on error with a pass/fail summary (`-c`)
+- JSON output for scripting and automation (`-j`)
+- Flexible configuration via CLI flags, environment variables, or config file
 
 [BVCP](https://bhyve.npulse.net/) is a management panel for [bhyve](https://en.wikipedia.org/wiki/Bhyve),
 the hypervisor built into FreeBSD.
