@@ -71,6 +71,31 @@ Or save your settings once and skip the flags forever:
 - Python 3.6+
 - [pycryptodome](https://pypi.org/project/pycryptodome/) — `pip install pycryptodome`
 
+### Virtual environments
+
+It is recommended to run `bvcpcli` inside an isolated Python environment.
+
+**venv** (standard library):
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install pycryptodome
+```
+
+**uv** (fast drop-in):
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install pycryptodome
+```
+
+**Conda**:
+```bash
+conda create -n bvcpcli python=3.11
+conda activate bvcpcli
+pip install pycryptodome
+```
+
 ---
 
 ## Usage
