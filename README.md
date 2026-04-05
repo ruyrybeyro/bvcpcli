@@ -31,12 +31,16 @@ Tested with BVCP 2.2.2 running on FreeBSD 15.
 ## BVCP server configuration
 
 By default BVCP listens only on localhost. To use `bvcpcli` from a remote machine,
-edit `/var/lib/nPulse/BVCP/bvcp.conf` on the FreeBSD host and set `ipv4_listen`
-in the `[api]` section to the server's IP address:
+edit `/var/lib/nPulse/BVCP/bvcp.conf` on the FreeBSD host and change `ipv4_listen`
+in the `api` section from `127.0.0.1` to the server's IP address:
 
-```ini
-[api]
-ipv4_listen = 192.168.1.4
+```
+api
+{
+    ...
+    ipv4_listen = 192.168.1.4
+    ...
+}
 ```
 
 Then restart BVCP. If running `bvcpcli` on the same host as BVCP, no change is needed.
