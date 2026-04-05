@@ -1,0 +1,14 @@
+vm create w1 w1
+vm set w1 arch amd
+vm set w1 sys   win
+vm set w1 cpu.socket 1
+vm set w1 cpu.core   4
+vm set w1 memory 16G
+vm set w1 vnc.display 1024_768
+vm set w1 vnc.wait    false
+vm set w1 utc_time    false
+vm cdrom attach w1 Win11_25H2_English_x64_virtio.iso
+vm disk create w1 /zstor w1disk 100G
+vm disk attach w1 w1_w1disk.img w1_w1disk auto nvme
+vm nic add_virtio w1 privnet
+vm start w1
