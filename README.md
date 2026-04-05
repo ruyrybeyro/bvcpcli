@@ -10,13 +10,15 @@
 
 > A command-line client for [BVCP](https://bhyve.npulse.net/) — the Bhyve VM Control Panel for FreeBSD.
 
-Communicates with the BVCP backend over TCP using the DProtocol v2 protocol,
-encrypting traffic with **AES-128-CBC** using the provided API key.
+`bvcpcli` was built to make provisioning bhyve VMs easier from the command line,
+without needing the BVCP web interface. Communicates with the BVCP backend over TCP
+using the DProtocol v2 protocol, encrypting traffic with **AES-128-CBC** using the
+provided API key.
 
 Key features:
 
 - Run a single command directly from the shell (`vm list`, `version`, `vm create`, ...)
-- **Batch mode** — run multiple commands from a file or stdin, one per line
+- **Batch mode** — provision multiple VMs or run bulk operations from a file or stdin
 - Continue on error with a pass/fail summary (`-c`)
 - JSON output for scripting and automation (`-j`)
 - Flexible configuration via CLI flags, environment variables, or config file
