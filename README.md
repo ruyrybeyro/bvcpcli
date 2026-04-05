@@ -1,14 +1,21 @@
 # bvcpcli
 
 [![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://www.python.org/)
-[![Protocol](https://img.shields.io/badge/protocol-DProtocol%20v2-orange.svg)](../../)
+[![Platform](https://img.shields.io/badge/platform-FreeBSD-red.svg)](https://www.freebsd.org/)
+[![Bhyve](https://img.shields.io/badge/hypervisor-bhyve-orange.svg)](https://bhyve.npulse.net/)
+[![Protocol](https://img.shields.io/badge/protocol-DProtocol%20v2-orange.svg)](https://bhyve.npulse.net/)
 [![Encryption](https://img.shields.io/badge/encryption-AES--128--CBC-red.svg)](../../)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-> A command-line client for the BVCP VM backend using the DProtocol v2 protocol.
+> A command-line client for [BVCP](https://bhyve.npulse.net/) — the Bhyve VM Control Panel for FreeBSD.
 
-Connects over TCP, encrypts traffic with **AES-128-CBC** using the provided API key,
-and sends commands to the backend (e.g. `vm list`, `version`, `vm create`).
+Communicates with the BVCP backend over TCP using the DProtocol v2 protocol,
+encrypting traffic with **AES-128-CBC** using the provided API key.
+Supports sending commands such as `vm list`, `version`, and `vm create`
+directly from the shell or via batch files.
+
+[BVCP](https://bhyve.npulse.net/) is a management panel for [bhyve](https://en.wikipedia.org/wiki/Bhyve),
+the hypervisor built into FreeBSD.
 
 ---
 
