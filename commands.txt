@@ -1,7 +1,8 @@
-# Example: provision a Windows 11 VM named "w1"
+# Example: provision a Windows 11 VM
+# VM name: w1
 # Lines starting with # are comments and are ignored by bvcpcli
 
-# Create the VM using the w1 template
+# Create the VM (name: w1, template: w1)
 vm create w1 w1
 
 # CPU and architecture
