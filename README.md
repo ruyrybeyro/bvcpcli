@@ -75,6 +75,7 @@ Or save your settings once and skip the flags forever:
 
 It is recommended to run `bvcpcli` inside an isolated Python environment.
 On macOS, `venv` is the default and requires no extra installation.
+If running inside a FreeBSD jail, the jail itself provides isolation and a venv is not necessary — a direct `pip3 install pycryptodome` suffices.
 
 **venv** (standard library):
 ```bash
