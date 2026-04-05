@@ -74,6 +74,7 @@ Or save your settings once and skip the flags forever:
 ### Virtual environments
 
 It is recommended to run `bvcpcli` inside an isolated Python environment.
+On macOS, `venv` is the default and requires no extra installation.
 
 **venv** (standard library):
 ```bash
