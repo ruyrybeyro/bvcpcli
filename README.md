@@ -116,6 +116,8 @@ echo "vm list" | bvcpcli.py [options]  (stdin auto-detected)
 
 | Short | Long | Description |
 |-------|------|-------------|
+| `-1` | `--node1` | Use predefined node 1 |
+| `-2` | `--node2` | Use predefined node 2 |
 | `-h <host>` | `--host` | API host |
 | `-p <port>` | `--port` | API port (default: 8628) |
 | `-k <key>` | `--key` | API key in hex (32 hex chars, 16 bytes) |
@@ -136,10 +138,38 @@ echo "vm list" | bvcpcli.py [options]  (stdin auto-detected)
 
 Settings are resolved in this priority order (highest wins):
 
-1. Command-line arguments
-2. Environment variables
-3. Config file (`~/.bvcpcli.conf`)
-4. Defaults hardcoded in the script
+1. Command-line arguments (`-h`, `-k`, `-p`, `-t`)
+2. Node selection (`-1` / `-2`)
+3. Environment variables
+4. Config file (`~/.bvcpcli.conf`)
+5. Defaults hardcoded in the script
+
+### Predefined nodes
+
+Two nodes can be hardcoded in the script by filling in the `NODES` dict at the top of `bvcpcli.py`:
+
+```python
+NODES = {
+    "1": {"host": "192.168.1.4", "key": "AABBCC...", "port": 8628},
+    "2": {"host": "192.168.1.5", "key": "DDEEFF...", "port": 8628},
+}
+```
+
+Or saved to the config file once:
+
+```bash
+./bvcpcli.py -1 -h 192.168.1.4 -k AABBCC... --save-config
+./bvcpcli.py -2 -h 192.168.1.5 -k DDEEFF... --save-config
+```
+
+Then select a node at runtime:
+
+```bash
+./bvcpcli.py -1 vm list
+./bvcpcli.py -2 vm list
+```
+
+`-h`, `-k`, `-p` still override the node settings for one-off connections.
 
 ### Environment variables
 
@@ -170,6 +200,16 @@ host = 192.168.1.4
 key = AABBCC...
 port = 8628
 timeout = 5
+
+[node1]
+host = 192.168.1.4
+key = AABBCC...
+port = 8628
+
+[node2]
+host = 192.168.1.5
+key = DDEEFF...
+port = 8628
 ```
 
 ---

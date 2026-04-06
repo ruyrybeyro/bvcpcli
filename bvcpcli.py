@@ -9,11 +9,17 @@ a file with one command per line.
 
 Configuration priority (highest to lowest):
   1. Command-line arguments (-h, -k, -p, -t)
-  2. Environment variables (BVCP_HOST, BVCP_KEY, BVCP_PORT, BVCP_TIMEOUT)
-  3. Config file (~/.bvcpcli.conf)
-  4. Defaults hardcoded in the script
+  2. Node selection (-1 / -2)
+  3. Environment variables (BVCP_HOST, BVCP_KEY, BVCP_PORT, BVCP_TIMEOUT)
+  4. Config file (~/.bvcpcli.conf)
+  5. Defaults hardcoded in the script
 
 Requires: pip install pycryptodome
+
+
+Node selection (-1 / -2):
+  Node settings are loaded after the config file but before env vars and CLI args,
+  so -h/-k/-p can still override them for a one-off connection.
 """
 
 import argparse
@@ -46,6 +52,13 @@ API_KEY_HEX = ""
 API_HOST    = ""
 API_PORT    = 8628
 TIMEOUT     = 5
+
+# Predefined nodes — fill in host, key and optionally port for each node.
+# Select with -1 or -2 on the command line, or via [node1]/[node2] in the config file.
+NODES = {
+    "1": {"host": "", "key": "", "port": API_PORT},
+    "2": {"host": "", "key": "", "port": API_PORT},
+}
 
 CONFIG_FILE = os.path.expanduser("~/.bvcpcli.conf")
 
@@ -368,7 +381,7 @@ def _print_meta(meta, indent=0, outfile=None):
 
 def load_config():
     """Load settings from ~/.bvcpcli.conf if it exists.
-    Returns a dict with any of: host, key, port, timeout.
+    Returns a dict with any of: host, key, port, timeout, node1, node2.
 
     Example config file:
       [bvcp]
@@ -376,20 +389,38 @@ def load_config():
       key  = AABBCC...
       port = 8628
       timeout = 5
+
+      [node1]
+      host = 192.168.1.4
+      key  = AABBCC...
+      port = 8628
+
+      [node2]
+      host = 192.168.1.5
+      key  = DDEEFF...
+      port = 8628
     """
     cfg = {}
     parser = configparser.ConfigParser()
     parser.read(CONFIG_FILE)
+
     section = "bvcp"
     if parser.has_section(section):
-        if parser.has_option(section, "host"):
-            cfg["host"] = parser.get(section, "host")
-        if parser.has_option(section, "key"):
-            cfg["key"] = parser.get(section, "key")
-        if parser.has_option(section, "port"):
-            cfg["port"] = parser.getint(section, "port")
-        if parser.has_option(section, "timeout"):
-            cfg["timeout"] = parser.getint(section, "timeout")
+        if parser.has_option(section, "host"):    cfg["host"]    = parser.get(section, "host")
+        if parser.has_option(section, "key"):     cfg["key"]     = parser.get(section, "key")
+        if parser.has_option(section, "port"):    cfg["port"]    = parser.getint(section, "port")
+        if parser.has_option(section, "timeout"): cfg["timeout"] = parser.getint(section, "timeout")
+
+    for n in ("1", "2"):
+        sec = f"node{n}"
+        if parser.has_section(sec):
+            node = {}
+            if parser.has_option(sec, "host"): node["host"] = parser.get(sec, "host")
+            if parser.has_option(sec, "key"):  node["key"]  = parser.get(sec, "key")
+            if parser.has_option(sec, "port"): node["port"] = parser.getint(sec, "port")
+            if node:
+                cfg[sec] = node
+
     return cfg
 
 
@@ -429,6 +460,8 @@ def parse_args():
         epilog=f"Config file: {CONFIG_FILE}  |  Env vars: BVCP_HOST, BVCP_KEY, BVCP_PORT, BVCP_TIMEOUT",
         add_help=False
     )
+    parser.add_argument("-1", "--node1",       action="store_true", dest="node1", help="Use predefined node 1")
+    parser.add_argument("-2", "--node2",       action="store_true", dest="node2", help="Use predefined node 2")
     parser.add_argument("-h", "--host",        default=None, help="API host")
     parser.add_argument("-p", "--port",        type=int, default=None, help="API port (default: 8628)")
     parser.add_argument("-k", "--key",         default=None, help="API key in hex")
@@ -446,7 +479,20 @@ def parse_args():
 
     a = parser.parse_args()
 
-    # Command-line values override config/env where provided
+    if a.node1 and a.node2:
+        print("Error: -1 and -2 are mutually exclusive", file=sys.stderr)
+        sys.exit(1)
+
+    # 4a. Apply predefined node settings (between env vars and explicit CLI flags)
+    if a.node1 or a.node2:
+        node_key = "1" if a.node1 else "2"
+        # Config file node section takes precedence over hardcoded NODES
+        node = cfg.get(f"node{node_key}") or NODES[node_key]
+        if node.get("host"): host    = node["host"]
+        if node.get("key"):  key_hex = node["key"]
+        if node.get("port"): port    = node["port"]
+
+    # Command-line values override everything
     if a.host:    host    = a.host
     if a.port:    port    = a.port
     if a.key:     key_hex = a.key
@@ -516,6 +562,10 @@ def main():
             print("Warning: --save-config exits immediately; command was not sent", file=sys.stderr)
         cfg_out = configparser.ConfigParser()
         cfg_out["bvcp"] = {"host": a.host, "key": a.key_hex, "port": str(a.port), "timeout": str(a.timeout)}
+        if a.node1:
+            cfg_out["node1"] = {"host": a.host, "key": a.key_hex, "port": str(a.port)}
+        elif a.node2:
+            cfg_out["node2"] = {"host": a.host, "key": a.key_hex, "port": str(a.port)}
         with open(CONFIG_FILE, "w", encoding="utf-8") as f:
             cfg_out.write(f)
         print(f"Config saved to {CONFIG_FILE}")
