@@ -226,17 +226,25 @@ port = 8628
 
 ### Batch file
 
-[`commandsWin.txt`](commandsWin.txt) is a plain text file with one command per line. Lines starting with `#` are treated as comments and ignored.
+[`commandsWin.txt`](commandsWin.txt) and [`commandsLinux.txt`](commandsLinux.txt) are plain text files with one command per line. Lines starting with `#` are treated as comments and ignored.
 
 ```
 # commandsWin.txt
-version
-vm list
-vm create myvm template
+vm create w1 w1
+vm set w1 sys win
+vm start w1
+```
+
+```
+# commandsLinux.txt
+vm create debian1 debian1
+vm set debian1 sys linux
+vm start debian1
 ```
 
 ```bash
 ./bvcpcli.py -f commandsWin.txt
+./bvcpcli.py -f commandsLinux.txt
 ```
 
 ### Stdin / heredoc
@@ -254,6 +262,7 @@ EOF
 
 ```bash
 ./bvcpcli.py -c -f commandsWin.txt
+./bvcpcli.py -c -f commandsLinux.txt
 Summary: 12 succeeded, 2 failed
 ```
 
@@ -267,6 +276,7 @@ Summary: 12 succeeded, 2 failed
 
 ```bash
 ./bvcpcli.py -o results.txt -f commandsWin.txt
+./bvcpcli.py -o results.txt -f commandsLinux.txt
 ```
 
 ---

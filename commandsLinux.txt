@@ -18,7 +18,7 @@ vm set debian1 memory 4G
 vm set debian1 vnc.display 1024_768
 vm set debian1 vnc.wait    false
 
-# Use UTC time (recommended for Linux guests)
+# Use local time (not recommended for Linux, but matches existing VM config)
 vm set debian1 utc_time    false
 
 # ACPI support
