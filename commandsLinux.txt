@@ -1,0 +1,38 @@
+# Example: provision a Debian Linux VM
+# VM name: debian1
+# Lines starting with # are comments and are ignored by bvcpcli
+
+# Create the VM (name: debian1, comment: debian1)
+vm create debian1 debian1
+
+# CPU and architecture
+vm set debian1 arch amd
+vm set debian1 sys   linux
+vm set debian1 cpu.socket 1
+vm set debian1 cpu.core   3
+
+# Memory
+vm set debian1 memory 4G
+
+# VNC display settings
+vm set debian1 vnc.display 1024_768
+vm set debian1 vnc.wait    false
+
+# Use UTC time (recommended for Linux guests)
+vm set debian1 utc_time    false
+
+# ACPI support
+vm set debian1 gen_acpi    true
+
+# Attach Debian installation ISO
+vm cdrom attach debian1 debian-13.3.0-amd64-DVD-1.iso
+
+# Create and attach a disk on the zstor pool
+vm disk create debian1 /zstor debian1disk 100G
+vm disk attach debian1 debian1_debian1disk.img debian1_debian1disk auto nvme
+
+# Add a VirtIO NIC on the private network
+vm nic add_virtio debian1 privnet
+
+# Boot the VM
+vm start debian1

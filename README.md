@@ -226,17 +226,17 @@ port = 8628
 
 ### Batch file
 
-[`commands.txt`](commands.txt) is a plain text file with one command per line. Lines starting with `#` are treated as comments and ignored.
+[`commandsWin.txt`](commandsWin.txt) is a plain text file with one command per line. Lines starting with `#` are treated as comments and ignored.
 
 ```
-# commands.txt
+# commandsWin.txt
 version
 vm list
 vm create myvm template
 ```
 
 ```bash
-./bvcpcli.py -f commands.txt
+./bvcpcli.py -f commandsWin.txt
 ```
 
 ### Stdin / heredoc
@@ -253,7 +253,7 @@ EOF
 ### Continue on error and show summary
 
 ```bash
-./bvcpcli.py -c -f commands.txt
+./bvcpcli.py -c -f commandsWin.txt
 Summary: 12 succeeded, 2 failed
 ```
 
@@ -266,7 +266,7 @@ Summary: 12 succeeded, 2 failed
 ### Save output to file
 
 ```bash
-./bvcpcli.py -o results.txt -f commands.txt
+./bvcpcli.py -o results.txt -f commandsWin.txt
 ```
 
 ---
